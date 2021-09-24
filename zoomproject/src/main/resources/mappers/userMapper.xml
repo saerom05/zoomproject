@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.review.mapper.userMapper">
+	
+		<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="UserVO">
+		insert into member
+			(userName, userId, userPasswd, userPhone, userEmail)
+		value
+			(#{userName}, #{userId}, #{userPasswd}, #{userPhone}, #{userEmail})
+	</insert>
+	<select id="getIdCnt" parameterType="UserVO" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			member
+		where
+			userId = #{userId}
+	</select>
+	
+	
+		<!-- 로그인 -->
+	<select id="loginBcrypt" resultType="com.review.domain.UserVO">
+		select
+			*
+		from
+			member
+		where 
+			userId = #{userId}
+		and
+			userPasswd = #{userPasswd}
+		
+	</select>
+	
+		
+	
+	<!-- 회원 정보 수정 -->
+	<update id="update_myPage" parameterType="UserVO">
+		update member 
+		set 
+			userName = #{userName},
+		    userId = #{userId},
+		    userPasswd = #{userPasswd},
+		    userPhone = #{userPhone},
+		    userEmail = #{userEmail}
+		    <!--verify = #{verify}-->
+		where 
+			userId = #{userId};
+	</update>
+
+	 <!-- 회원탈퇴 -->
+	 <delete id="memberDelete" parameterType="UserVO">
+	 	delete 
+	 		from member
+	 	where
+	 		userId = #{userId}
+	 	and 
+	 		userPasswd = #{userPasswd}
+	 </delete>
+	 
+	 
+	 <!-- 패스워드 체크 -->
+	<select id="passChk" parameterType="UserVo" resultType="int">
+		SELECT
+			COUNT(*) 
+		FROM 
+			member 
+		where 
+			userId = #{userId} 
+		and 
+			userPasswd = #{userPasswd} 
+	</select>
+	
+	<!-- 회원목록 -->
+	<select id="listCriteria" resultType="com.review.domain.UserVO">
+	 <![CDATA[
+	 select 
+	   		userName,
+			userId,
+			userPhone,
+			userEmail,
+			regiDate
+	 from 
+	   		member 
+	 where 
+	 		verify = 0 
+	 order by 
+			regiDate desc
+	 limit #{pageStart}, #{perPageNum}
+	 ]]>
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[  
+	  select 
+	  		count(verify) 
+	  from 
+	  		member 
+	  where 
+	  		verify >= 0 
+]]>
+
+	</select>
+	
+		<select id="listSearch" resultType="com.review.domain.UserVO">
+<![CDATA[  
+  		select 
+  			userName,
+			userId,
+			userPhone,
+			userEmail,
+			regiDate 
+  		from 
+  			member 
+  		where 
+  			verify = 0 
+]]>  
+<![CDATA[    
+  		order by 
+  			regiDate desc
+  		limit #{pageStart}, #{perPageNum}
+]]>
+	</select>
+	
+	
+	
+	<!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="String">
+		select
+			userId
+		from
+			member
+		where
+			userEmail = #{userEmail}
+			
+	</select>
+
+	<!-- 비밀번호 업데이트 -->
+	<update id="updatePwd">
+		update
+			member
+		set
+			userPasswd = #{userPasswd}
+		where 
+			userId = #{userId}
+		and
+			userEmail = #{userEmail}
+	</update>
+
+</mapper>

@@ -1,0 +1,53 @@
+body, html {
+	padding: 0px;
+	margin: 0px;
+}
+
+.menu_nav a {
+	text-decoration: none;
+}
+
+#main > div{
+	min-height: 600px;
+}
+#main >.left{
+	width: 20%;
+	float: left;	
+}
+#main >.right{
+	padding-top: 7px;
+	width: 80%;
+	float: right;
+}
+.left>ul>li>a {
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	margin: 0.25rem;
+	padding: 0.5rem 2rem;
+	font-weight: lighter;
+}
+
+.left>ul>li>a:hover {
+	color: black;
+	background-color: rgba(255, 255, 255, 0.25);
+}
+
+
+li {
+	padding-bottom: 20px;
+	list-style: none;
+}
+
+#menu h1 {
+	padding-top: 27px;
+	color: white;
+}
+
+#menu {
+	border-bottom: 1px solid #c0c0c0;
+	
+}
+#footer{
+	padding-left: 30%;
+}
